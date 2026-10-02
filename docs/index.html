@@ -204,7 +204,7 @@ function renderHistory() {
   $("histCard").hidden = ps.length === 0;
   if (!ps.length) return;
   const rq = annualRate("QQQ"), rv = annualRate("VOO");
-  const lv = longTermRate("VOO");
+  const lv = longTermRate("VOO"), lq = longTermRate("QQQ");
   $("hist").innerHTML = ps.map((p, i) => {
     const skipped = p.kind === "skipped";
     return `
@@ -220,8 +220,11 @@ function renderHistory() {
   const parts = [];
   if (rv !== null) parts.push(`VOO ${fmt(saved * (1 + rv))}`);
   if (rq !== null) parts.push(`QQQ ${fmt(saved * (1 + rq))}`);
+  const lt = [];
+  if (lv !== null) lt.push(`VOO ${fmt(saved * (1 + lv))}`);
+  if (lq !== null) lt.push(`QQQ ${fmt(saved * (1 + lq))}`);
   $("savedFuture").innerHTML = saved > 0 && parts.length
-    ? `一年后预估：${parts.join(" · ")}${lv !== null ? `<br>按近5年平均（VOO）：${fmt(saved * (1 + lv))}` : ""}`
+    ? `一年后预估：${parts.join(" · ")}${lt.length ? `<br>按近5年平均：${lt.join(" · ")}` : ""}`
     : "";
   $("totSpent").textContent = fmt(spent);
 }

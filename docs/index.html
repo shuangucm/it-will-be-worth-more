@@ -210,7 +210,7 @@ function renderHistory() {
     return `
     <li>
       <span class="name"><span class="tag ${skipped ? "skip" : "buy"}">${skipped ? "忍住了" : "买了"}</span>${escapeHtml(p.name)}<br><small class="note">${p.date}</small></span>
-      <span class="nums">${fmt(p.price)}${rv !== null ? `<small>VOO→${fmt(p.price * (1 + rv))}</small>` : ""}</span>
+      <span class="nums">${fmt(p.price)}${rv !== null ? `<small>VOO→${fmt(p.price * (1 + rv))}</small>` : ""}${rq !== null ? `<small>QQQ→${fmt(p.price * (1 + rq))}</small>` : ""}</span>
       <button class="ghost" data-del="${i}" aria-label="删除">✕</button>
     </li>`;
   }).join("");

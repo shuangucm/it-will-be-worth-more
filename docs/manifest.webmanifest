@@ -1,0 +1,8 @@
+{
+  "name": "剁手前想一想",
+  "short_name": "剁手计算器",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a"
+}

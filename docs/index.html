@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>剁手前想一想</title>
+<meta name="theme-color" content="#0f172a">
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+  :root {
+    --bg: #f6f7f9; --card: #ffffff; --text: #111827; --muted: #6b7280; --line: #e5e7eb;
+    --accent: #2563eb; --qqq: #7c3aed; --voo: #059669; --bad: #dc2626;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0b1020; --card: #141a2e; --text: #e5e7eb; --muted: #9ca3af; --line: #263049;
+      --accent: #60a5fa; --qqq: #a78bfa; --voo: #34d399; --bad: #f87171;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif; }
+  main { max-width: 560px; margin: 0 auto; padding: 20px 16px 48px; }
+  h1 { font-size: 22px; margin: 4px 0 2px; }
+  .sub { color: var(--muted); font-size: 14px; margin: 0 0 16px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin-bottom: 14px; }
+  label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+  input { width: 100%; font: inherit; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--bg); color: var(--text); }
+  .row { display: flex; gap: 10px; }
+  .row > div { flex: 1; min-width: 0; }
+  .price-wrap { position: relative; }
+  .price-wrap span { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); }
+  .price-wrap input { padding-left: 24px; font-size: 22px; font-weight: 600; }
+  button { font: inherit; border: 0; border-radius: 10px; padding: 10px 14px; cursor: pointer; }
+  .actions { display: flex; gap: 10px; margin-top: 12px; }
+  .actions button { flex: 1; font-weight: 600; }
+  .primary { background: var(--accent); color: #fff; }
+  .secondary { background: transparent; color: var(--muted); border: 1px solid var(--line); }
+  .ghost { background: transparent; color: var(--muted); padding: 4px 8px; }
+  .results { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .res { border-radius: 12px; padding: 12px; border: 1px solid var(--line); }
+  .res .tk { font-weight: 700; font-size: 14px; }
+  .res .fv { font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums; margin: 2px 0; }
+  .res .gain { font-size: 14px; font-variant-numeric: tabular-nums; }
+  .res .meta { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .res .lt { font-size: 12px; color: var(--muted); margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--line); }
+  .res .lt b { color: var(--text); font-variant-numeric: tabular-nums; }
+  .res svg { width: 100%; height: 36px; display: block; margin-top: 6px; }
+  .neg { color: var(--bad); }
+  .headline { font-size: 15px; margin: 0 0 12px; }
+  .headline b { font-variant-numeric: tabular-nums; }
+  .note { font-size: 12px; color: var(--muted); }
+  ul.hist { list-style: none; padding: 0; margin: 0; }
+  ul.hist li { display: flex; justify-content: space-between; align-items: center; gap: 8px;
+    padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+  ul.hist li:last-child { border-bottom: 0; }
+  .hist .name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .hist .nums { text-align: right; font-variant-numeric: tabular-nums; }
+  .hist .nums small { color: var(--muted); display: block; }
+  .tag { font-size: 11px; border-radius: 6px; padding: 1px 6px; margin-right: 4px; }
+  .tag.skip { background: color-mix(in srgb, var(--voo) 18%, transparent); color: var(--voo); }
+  .tag.buy { background: color-mix(in srgb, var(--muted) 18%, transparent); color: var(--muted); }
+  .saved { font-size: 13px; color: var(--muted); }
+  .saved .big { font-size: 30px; font-weight: 700; color: var(--voo); font-variant-numeric: tabular-nums; line-height: 1.2; }
+  .total { display: flex; justify-content: space-between; font-weight: 600; margin-top: 8px; }
+  details summary { cursor: pointer; color: var(--muted); font-size: 14px; }
+  .warn { color: var(--bad); font-size: 13px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>剁手前想一想 🤔</h1>
+  <p class="sub">这笔钱如果拿去买 QQQ / VOO，一年后会变成多少？</p>
+
+  <div class="card">
+    <form id="form">
+      <div class="row">
+        <div>
+          <label for="item">买什么</label>
+          <input id="item" placeholder="比如：新手表" autocomplete="off">
+        </div>
+        <div>
+          <label for="price">价格 (USD)</label>
+          <div class="price-wrap"><span>$</span><input id="price" type="number" inputmode="decimal" min="0" step="0.01" placeholder="350"></div>
+        </div>
+      </div>
+      <div id="out" style="margin-top:14px"></div>
+      <div class="actions">
+        <button class="primary" type="submit" value="skipped">先不买了 💪</button>
+        <button class="secondary" type="submit" value="bought">还是买了</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card" id="histCard" hidden>
+    <div class="saved">
+      累计忍住的钱
+      <div class="big" id="totSaved"></div>
+      <span id="savedFuture"></span>
+    </div>
+    <div class="total" style="font-weight:400;font-size:14px"><span>还是买了的</span><span id="totSpent"></span></div>
+    <ul class="hist" id="hist"></ul>
+  </div>
+
+  <div class="card">
+    <details>
+      <summary>算法 & 手动调整年化收益</summary>
+      <p class="note">
+        用 6 个月前的价格和今天的价格算出涨幅，再按复利延续一年（价格已包含分红）：
+        <br>一年后价值 = 价格 × (1 + 6个月涨幅)<sup>2</sup>
+        <br>只看近 6 个月外推波动很大：半年涨 20% 年化就是 44%，赶上回调甚至是负数。
+        所以每个结果下面还有一行“按近 5 年平均”作为更稳的参照。
+        这个 app 是用来给消费冲动降温的，不是用来预测收益的。
+        <br>价格数据由 GitHub Actions 每个交易日收盘后自动更新。
+      </p>
+      <div class="row">
+        <div><label for="ovQQQ">QQQ 年化 % (留空=自动)</label><input id="ovQQQ" type="number" step="0.1" inputmode="decimal"></div>
+        <div><label for="ovVOO">VOO 年化 % (留空=自动)</label><input id="ovVOO" type="number" step="0.1" inputmode="decimal"></div>
+      </div>
+      <p class="note" id="dataInfo"></p>
+    </details>
+  </div>
+
+  <p class="note">⚠️ 仅供参考，不构成投资建议。过去 6 个月的表现不代表未来，ETF 也可能下跌。</p>
+</main>
+
+<script>
+const TICKERS = ["QQQ", "VOO"];
+const STORE = "spend-vs-invest:v1";
+const $ = (id) => document.getElementById(id);
+const fmt = (n) => n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: n >= 1000 ? 0 : 2 });
+const pct = (r) => (r >= 0 ? "+" : "") + (r * 100).toFixed(1) + "%";
+
+let market = null;
+
+function load(key, fallback) {
+  try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
+}
+function save(key, val) {
+  try { localStorage.setItem(key, JSON.stringify(val)); } catch {}
+}
+let state = load(STORE, { purchases: [], overrides: {} });
+state.purchases.forEach((p) => { p.kind ??= "bought"; });
+
+// Annual growth rate for a ticker: manual override wins, else (1 + 6mo return)^2 - 1.
+function annualRate(t) {
+  const ov = state.overrides[t];
+  if (ov !== undefined && ov !== null && ov !== "") return Number(ov) / 100;
+  const d = market?.tickers?.[t];
+  if (!d) return null;
+  return Math.pow(1 + d.period_return, 12 / d.period_months) - 1;
+}
+
+// Steadier reference: average annual return over the last ~5 years.
+function longTermRate(t) {
+  const r = market?.tickers?.[t]?.long_term_annualized_return;
+  return typeof r === "number" ? r : null;
+}
+
+function sparkline(history, color) {
+  if (!history || history.length < 2) return "";
+  const ys = history.map((h) => h[1]);
+  const min = Math.min(...ys), max = Math.max(...ys), span = max - min || 1;
+  const pts = ys.map((y, i) => `${(i / (ys.length - 1)) * 100},${34 - ((y - min) / span) * 32}`).join(" ");
+  return `<svg viewBox="0 0 100 36" preserveAspectRatio="none"><polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.5" vector-effect="non-scaling-stroke"/></svg>`;
+}
+
+function render() {
+  const price = parseFloat($("price").value);
+  const out = $("out");
+  if (!(price > 0)) {
+    out.innerHTML = `<p class="note">输入价格，看看机会成本。</p>`;
+  } else {
+    const cards = TICKERS.map((t) => {
+      const r = annualRate(t);
+      const color = getComputedStyle(document.documentElement).getPropertyValue(t === "QQQ" ? "--qqq" : "--voo");
+      if (r === null) return `<div class="res"><div class="tk" style="color:${color}">${t}</div><div class="meta">暂无数据，可在下方手动填写年化收益</div></div>`;
+      const fv = price * (1 + r), gain = fv - price;
+      const d = market?.tickers?.[t];
+      const manual = state.overrides[t] !== undefined && state.overrides[t] !== "";
+      const lt = longTermRate(t);
+      return `<div class="res">
+        <div class="tk" style="color:${color}">${t}</div>
+        <div class="fv">${fmt(fv)}</div>
+        <div class="gain ${gain < 0 ? "neg" : ""}">${gain >= 0 ? "+" : ""}${fmt(gain)} (${pct(r)})</div>
+        <div class="meta">${manual || !d ? "手动年化" : `近6个月 ${pct(d.period_return)}`}</div>
+        ${manual || !d ? "" : sparkline(d.history, color)}
+        ${lt !== null ? `<div class="lt">按近${Math.round(d.long_term_years)}年平均：<b>${fmt(price * (1 + lt))}</b>（年化 ${pct(lt)}）</div>` : ""}
+      </div>`;
+    });
+    const best = Math.max(...TICKERS.map(annualRate).filter((r) => r !== null));
+    const name = $("item").value.trim() || "这件东西";
+    const headline = isFinite(best)
+      ? `<p class="headline">不买 <b>${escapeHtml(name)}</b>，这 <b>${fmt(price)}</b> 拿去投资，一年后可能变成 <b>${fmt(price * (1 + best))}</b>。</p>`
+      : "";
+    out.innerHTML = headline + `<div class="results">${cards.join("")}</div>`;
+  }
+  renderHistory();
+}
+
+function renderHistory() {
+  const ps = state.purchases;
+  $("histCard").hidden = ps.length === 0;
+  if (!ps.length) return;
+  const rq = annualRate("QQQ"), rv = annualRate("VOO");
+  const lv = longTermRate("VOO");
+  $("hist").innerHTML = ps.map((p, i) => {
+    const skipped = p.kind === "skipped";
+    return `
+    <li>
+      <span class="name"><span class="tag ${skipped ? "skip" : "buy"}">${skipped ? "忍住了" : "买了"}</span>${escapeHtml(p.name)}<br><small class="note">${p.date}</small></span>
+      <span class="nums">${fmt(p.price)}${rv !== null ? `<small>VOO→${fmt(p.price * (1 + rv))}</small>` : ""}</span>
+      <button class="ghost" data-del="${i}" aria-label="删除">✕</button>
+    </li>`;
+  }).join("");
+  const sum = (kind) => ps.filter((p) => p.kind === kind).reduce((s, p) => s + p.price, 0);
+  const saved = sum("skipped"), spent = sum("bought");
+  $("totSaved").textContent = fmt(saved);
+  const parts = [];
+  if (rv !== null) parts.push(`VOO ${fmt(saved * (1 + rv))}`);
+  if (rq !== null) parts.push(`QQQ ${fmt(saved * (1 + rq))}`);
+  $("savedFuture").innerHTML = saved > 0 && parts.length
+    ? `一年后预估：${parts.join(" · ")}${lv !== null ? `<br>按近5年平均（VOO）：${fmt(saved * (1 + lv))}` : ""}`
+    : "";
+  $("totSpent").textContent = fmt(spent);
+}
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+$("form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const price = parseFloat($("price").value);
+  if (!(price > 0)) return $("price").focus();
+  const kind = e.submitter?.value === "bought" ? "bought" : "skipped";
+  state.purchases.unshift({ kind, name: $("item").value.trim() || "未命名", price, date: new Date().toISOString().slice(0, 10) });
+  save(STORE, state);
+  $("item").value = ""; $("price").value = "";
+  render();
+});
+$("hist").addEventListener("click", (e) => {
+  const i = e.target.dataset.del;
+  if (i === undefined) return;
+  state.purchases.splice(Number(i), 1);
+  save(STORE, state);
+  render();
+});
+["item", "price"].forEach((id) => $(id).addEventListener("input", render));
+TICKERS.forEach((t) => {
+  const el = $("ov" + t);
+  el.value = state.overrides[t] ?? "";
+  el.addEventListener("input", () => { state.overrides[t] = el.value; save(STORE, state); render(); });
+});
+
+fetch("data/prices.json", { cache: "no-cache" })
+  .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+  .then((data) => {
+    market = data;
+    $("dataInfo").textContent = "数据更新于 " + new Date(data.updated_at).toLocaleString() + "；" +
+      TICKERS.map((t) => { const d = data.tickers[t]; return `${t}: ${d.start_date} $${d.start_close} → ${d.last_date} $${d.last_close}`; }).join("；");
+  })
+  .catch(() => {
+    $("dataInfo").innerHTML = `<span class="warn">还没有价格数据。请在 GitHub 的 Actions 页面手动运行一次 “Update ETF prices”，或先手动填写年化收益。</span>`;
+  })
+  .finally(render);
+
+render();
+</script>
+</body>
+</html>

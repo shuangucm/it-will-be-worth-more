@@ -1,24 +1,20 @@
 {
-  "updated_at": "2026-10-16T00:32:05+00:00",
+  "updated_at": "2026-10-17T00:40:09+00:00",
   "tickers": {
     "QQQ": {
       "source": "yahoo",
-      "last_date": "2026-10-14",
-      "last_close": 728.95,
-      "start_date": "2026-04-14",
-      "start_close": 627.2563,
+      "last_date": "2026-10-15",
+      "last_close": 728.0,
+      "start_date": "2026-04-15",
+      "start_close": 636.0375,
       "period_months": 6,
-      "period_return": 0.162125,
-      "avg_monthly_return": 0.025358,
-      "annualized_return": 0.349702,
+      "period_return": 0.144587,
+      "avg_monthly_return": 0.022762,
+      "annualized_return": 0.309353,
       "long_term_start_date": "2021-10-18",
       "long_term_years": 4.99,
-      "long_term_annualized_return": 0.150846,
+      "long_term_annualized_return": 0.150457,
       "history": [
-        [
-          "2026-04-14",
-          627.26
-        ],
         [
           "2026-04-21",
           642.95
@@ -120,29 +116,25 @@
           746.04
         ],
         [
-          "2026-10-14",
-          728.95
+          "2026-10-15",
+          728.0
         ]
       ]
     },
     "VOO": {
       "source": "yahoo",
-      "last_date": "2026-10-14",
-      "last_close": 707.43,
-      "start_date": "2026-04-14",
-      "start_close": 634.864,
+      "last_date": "2026-10-15",
+      "last_close": 709.43,
+      "start_date": "2026-04-15",
+      "start_close": 639.9362,
       "period_months": 6,
-      "period_return": 0.114302,
-      "avg_monthly_return": 0.018202,
-      "annualized_return": 0.241117,
+      "period_return": 0.108595,
+      "avg_monthly_return": 0.017331,
+      "annualized_return": 0.228463,
       "long_term_start_date": "2021-10-18",
       "long_term_years": 4.99,
-      "long_term_annualized_return": 0.130701,
+      "long_term_annualized_return": 0.131265,
       "history": [
-        [
-          "2026-04-14",
-          634.86
-        ],
         [
           "2026-04-21",
           643.72
@@ -244,8 +236,8 @@
           715.13
         ],
         [
-          "2026-10-14",
-          707.43
+          "2026-10-15",
+          709.43
         ]
       ]
     }

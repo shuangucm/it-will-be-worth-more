@@ -1,19 +1,19 @@
 {
-  "updated_at": "2026-10-30T02:04:26+00:00",
+  "updated_at": "2026-10-31T01:42:52+00:00",
   "tickers": {
     "QQQ": {
       "source": "yahoo",
-      "last_date": "2026-10-29",
-      "last_close": 715.34,
-      "start_date": "2026-04-29",
-      "start_close": 660.1559,
+      "last_date": "2026-10-30",
+      "last_close": 690.49,
+      "start_date": "2026-04-30",
+      "start_close": 666.3126,
       "period_months": 6,
-      "period_return": 0.083593,
-      "avg_monthly_return": 0.01347,
-      "annualized_return": 0.173787,
+      "period_return": 0.036285,
+      "avg_monthly_return": 0.005958,
+      "annualized_return": 0.07373,
       "long_term_start_date": "2021-11-01",
       "long_term_years": 4.99,
-      "long_term_annualized_return": 0.137521,
+      "long_term_annualized_return": 0.129416,
       "history": [
         [
           "2026-05-05",
@@ -116,24 +116,24 @@
           712.2
         ],
         [
-          "2026-10-29",
-          715.34
+          "2026-10-30",
+          690.49
         ]
       ]
     },
     "VOO": {
       "source": "yahoo",
-      "last_date": "2026-10-29",
-      "last_close": 707.32,
-      "start_date": "2026-04-29",
-      "start_close": 650.6673,
+      "last_date": "2026-10-30",
+      "last_close": 694.81,
+      "start_date": "2026-04-30",
+      "start_close": 656.9727,
       "period_months": 6,
-      "period_return": 0.087069,
-      "avg_monthly_return": 0.014011,
-      "annualized_return": 0.181314,
+      "period_return": 0.057593,
+      "avg_monthly_return": 0.009376,
+      "annualized_return": 0.118247,
       "long_term_start_date": "2021-11-01",
       "long_term_years": 4.99,
-      "long_term_annualized_return": 0.124161,
+      "long_term_annualized_return": 0.12008,
       "history": [
         [
           "2026-05-05",
@@ -236,8 +236,8 @@
           703.41
         ],
         [
-          "2026-10-29",
-          707.32
+          "2026-10-30",
+          694.81
         ]
       ]
     }

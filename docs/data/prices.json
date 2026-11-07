@@ -1,24 +1,20 @@
 {
-  "updated_at": "2026-11-06T02:40:33+00:00",
+  "updated_at": "2026-11-07T02:08:13+00:00",
   "tickers": {
     "QQQ": {
       "source": "yahoo",
-      "last_date": "2026-11-05",
-      "last_close": 647.05,
-      "start_date": "2026-05-05",
-      "start_close": 680.153,
+      "last_date": "2026-11-06",
+      "last_close": 656.1,
+      "start_date": "2026-05-06",
+      "start_close": 694.2828,
       "period_months": 6,
-      "period_return": -0.04867,
-      "avg_monthly_return": -0.008281,
-      "annualized_return": -0.094296,
+      "period_return": -0.054996,
+      "avg_monthly_return": -0.009383,
+      "annualized_return": -0.106212,
       "long_term_start_date": "2021-11-08",
       "long_term_years": 4.99,
-      "long_term_annualized_return": 0.108852,
+      "long_term_annualized_return": 0.111878,
       "history": [
-        [
-          "2026-05-05",
-          680.15
-        ],
         [
           "2026-05-12",
           705.73
@@ -120,29 +116,25 @@
           681.09
         ],
         [
-          "2026-11-05",
-          647.05
+          "2026-11-06",
+          656.1
         ]
       ]
     },
     "VOO": {
       "source": "yahoo",
-      "last_date": "2026-11-05",
-      "last_close": 673.97,
-      "start_date": "2026-05-05",
-      "start_close": 661.6669,
+      "last_date": "2026-11-06",
+      "last_close": 675.99,
+      "start_date": "2026-05-06",
+      "start_close": 670.9757,
       "period_months": 6,
-      "period_return": 0.018594,
-      "avg_monthly_return": 0.003075,
-      "annualized_return": 0.037248,
+      "period_return": 0.007473,
+      "avg_monthly_return": 0.001242,
+      "annualized_return": 0.014889,
       "long_term_start_date": "2021-11-08",
       "long_term_years": 4.99,
-      "long_term_annualized_return": 0.109072,
+      "long_term_annualized_return": 0.109674,
       "history": [
-        [
-          "2026-05-05",
-          661.67
-        ],
         [
           "2026-05-12",
           674.96
@@ -244,8 +236,8 @@
           691.32
         ],
         [
-          "2026-11-05",
-          673.97
+          "2026-11-06",
+          675.99
         ]
       ]
     }
